@@ -12,12 +12,8 @@ redisClient.on('error', (err) => {
     console.error('redis error', err);
     process.exit();
 });
-redisClient.on('success', (success) => {
-    console.error('redis success', success);
-});
 
 /**
- * 
  * @param {string} key 键
  * @param {string} val 值
  * @param {number} timeout 超时时间
@@ -50,7 +46,7 @@ function get(key) {
                 resolve(
                     JSON.parse(val)
                 )
-            } catch (ex) {
+            } catch (val) {
                 resolve(val)
             }
         })
@@ -60,5 +56,6 @@ function get(key) {
 
 module.exports = {
     set,
-    get
+    get,
+    redisClient
 }

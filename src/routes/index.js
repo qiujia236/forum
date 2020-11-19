@@ -7,16 +7,21 @@ router.get('/', async (ctx, next) => {
 });
 
 router.get('/json', async (ctx, next) => {
+  const session = ctx.session;
+  if (session.vieNum === null) {
+    session.vieNum = 0;
+  }
+  session.vieNum++;
   ctx.body = {
-    title: 'koa2 json'
+    title: 'koa2 json',
+    vieNum: session.vieNum
   }
 });
 
 router.get('/profile/:userName', async (ctx, next) => {
-  const { userName } = ctx.params;
   ctx.body = {
     title: 'this is profile page',
-    userName
+    userName,
   }
 });
 

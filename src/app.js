@@ -5,6 +5,10 @@ const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
+const session = require('koa-generic-session');
+const redisStore = require('koa-redis');
+const { REDIS_CONF } = require('./conf/db');
+const { redisClient } = require('./cache/_redis');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -19,10 +23,30 @@ app.use(bodyparser({
 app.use(json());
 app.use(logger());
 app.use(require('koa-static')(__dirname + '/public'));
-
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }));
+
+let options = {
+  host: REDIS_CONF.host,
+  port: REDIS_CONF.port,
+  auth_pass: REDIS_CONF.password.auth_pass
+}
+app.keys = ['UISDF_7878#'];
+app.use(session({
+  key: 'forum:sid',
+  prefix: 'forum:sess',
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
+  },
+  store: redisStore(options)
+  // store: redisStore({
+  //   all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+  // })
+}));
+
 
 // logger
 // app.use(async (ctx, next) => {
@@ -30,7 +54,7 @@ app.use(views(__dirname + '/views', {
 //   await next()
 //   const ms = new Date() - start
 //   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-// });
+// })
 
 // routes
 app.use(index.routes(), index.allowedMethods());
