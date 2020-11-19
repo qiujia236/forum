@@ -8,13 +8,20 @@ const logger = require('koa-logger');
 const session = require('koa-generic-session');
 const redisStore = require('koa-redis');
 const { REDIS_CONF } = require('./conf/db');
-const { redisClient } = require('./cache/_redis');
 
+const errorViewRouter = require('./routes/view/error');
 const index = require('./routes/index');
 const users = require('./routes/users');
+const { isProd } = require('./utils/env');
 
 // error handler，页面显示
-onerror(app);
+let onerrorConf = {}
+if (isProd) {
+  onerrorConf = {
+    redirect: '/error'
+  }
+}
+onerror(app, onerrorConf)
 
 // 中间件
 app.use(bodyparser({
@@ -47,7 +54,6 @@ app.use(session({
   // })
 }));
 
-
 // logger
 // app.use(async (ctx, next) => {
 //   const start = new Date()
@@ -59,6 +65,7 @@ app.use(session({
 // routes
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
+app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
