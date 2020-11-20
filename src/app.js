@@ -10,8 +10,9 @@ const redisStore = require('koa-redis');
 const { REDIS_CONF } = require('./conf/db');
 
 const errorViewRouter = require('./routes/view/error');
+const userViewRouter = require('./routes/view/user');
+const userAPIRouter = require('./routes/api/user');
 const index = require('./routes/index');
-const users = require('./routes/users');
 const { isProd } = require('./utils/env');
 
 // error handler，页面显示
@@ -37,7 +38,8 @@ app.use(views(__dirname + '/views', {
 let options = {
   host: REDIS_CONF.host,
   port: REDIS_CONF.port,
-  auth_pass: REDIS_CONF.password.auth_pass
+  auth_pass: REDIS_CONF.password.auth_pass,
+  db: 0
 }
 app.keys = ['UISDF_7878#'];
 app.use(session({
@@ -64,7 +66,8 @@ app.use(session({
 
 // routes
 app.use(index.routes(), index.allowedMethods());
-app.use(users.routes(), users.allowedMethods());
+app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
+app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods())
 
 // error-handling

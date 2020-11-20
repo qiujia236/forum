@@ -6,9 +6,11 @@ router.get('/', async (ctx, next) => {
 
 router.get('/json', async (ctx, next) => {
   const session = ctx.session;
-  if (session.vieNum === null) {
+
+  if (!session.vieNum) {
     session.vieNum = 0;
   }
+
   session.vieNum++;
   ctx.body = {
     title: 'koa2 json',
