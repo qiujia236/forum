@@ -1,10 +1,10 @@
 /**
  * @description user controller
  */
-
-const { registerUserNameNotExistInfo } = require("../model/ErrorInfo");
+const { registerUserNameNotExistInfo, registerFailInfo } = require("../model/ErrorInfo");
 const { SuccessModel, ErrorModel } = require("../model/ResModel");
-const { getUserInfo } = require("../services/user");
+const { getUserInfo, createUser } = require("../services/user");
+const doCrypto = require("../utils/cryp");
 
 /**
  * 用户名是否存在
@@ -20,4 +20,29 @@ async function isExist(userName) {
     }
 }
 
-module.exports = { isExist }
+/**
+ * register
+ * @param {string} userName 
+ * @param {string} password 
+ * @param {number} gender 性别（1男，2 女，3 保密）
+ */
+async function register({ userName, password, gender }) {
+    const userInfo = await getUserInfo(userName);
+    if (userInfo) {
+        return new ErrorModel(registerUserNameNotExistInfo);
+    }
+
+    try {
+        await createUser({
+            userName,
+            password: doCrypto(password),
+            gender
+        });
+        return new SuccessModel();
+    } catch (ex) {
+        console.error(ex.message, ex.stack);
+        return new ErrorModel(registerFailInfo);
+    }
+}
+
+module.exports = { isExist, register }

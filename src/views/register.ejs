@@ -27,6 +27,11 @@
     &nbsp;
     <a href="/login">已有账号，返回登录>></a>
 </form>
+<style>
+    #span-username-info {
+        color: red !important;
+    }
+</style>
 
 <script>
     $(function () {
@@ -115,7 +120,10 @@
                     return
                 }
                 alert('注册成功，请登录')
-                location.href = '/login'
+                setTimeout(() => {
+
+                    location.href = '/login'
+                }, 2000);
             })
         })
     })
