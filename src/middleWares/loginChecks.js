@@ -1,7 +1,6 @@
 /**
  * @description 登录验证的中间件
  */
-
 const { ErrorModel } = require('../model/ResModel')
 const { loginCheckFailInfo } = require('../model/ErrorInfo')
 
