@@ -10,3 +10,6 @@ yarn-error.log
 *.ntvs*
 *.njsproj
 *.sln
+ 
+# 上传图片文件夹 
+uploadFiles   

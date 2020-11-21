@@ -8,8 +8,8 @@ const router = require('koa-router')();
  */
 function getLoginInfo(ctx) {
     let data = { isLogin: false }
-
     const userInfo = ctx.session.userInfo;
+
     if (userInfo) {
         data = { isLogin: true, userName: userInfo.userName }
     }
