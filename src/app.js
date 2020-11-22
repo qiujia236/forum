@@ -10,11 +10,12 @@ const session = require('koa-generic-session');
 const redisStore = require('koa-redis');
 const { REDIS_CONF } = require('./conf/db');
 
-const errorViewRouter = require('./routes/view/error');
+const blogViewRouter = require('./routes/view/blog');
+const blogHomeAPIRouter = require('./routes/api/blog-home');
 const userViewRouter = require('./routes/view/user');
 const userAPIRouter = require('./routes/api/user');
 const utilsAPIRouter = require('./routes/api/utils');
-const index = require('./routes/index');
+const errorViewRouter = require('./routes/view/error');
 const { isProd } = require('./utils/env');
 
 // error handler，页面显示
@@ -34,6 +35,7 @@ app.use(json());
 app.use(logger());
 app.use(require('koa-static')(__dirname + '/public'));
 app.use(require('koa-static')(path.join(__dirname, '..', 'uploadFiles')));
+// ejs模板
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }));
@@ -68,9 +70,10 @@ app.use(session({
 // })
 
 // routes
-app.use(index.routes(), index.allowedMethods());
 app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
+app.use(blogHomeAPIRouter.routes(), blogHomeAPIRouter.allowedMethods())
+app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 app.use(utilsAPIRouter.routes(), utilsAPIRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods())
 
