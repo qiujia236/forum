@@ -14,6 +14,7 @@ async function createBlog({ userId, content, image }) {
         content,
         image
     })
+    console.log(result.dataValues);
     return result.dataValues
 }
 
