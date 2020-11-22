@@ -3,7 +3,7 @@
  * @author wb
  */
 const { isProd } = require('../utils/env');
-const host = '47.97.112.32';
+const host = '118.31.6.201';
 
 let REDIS_CONF = {
     port: 6379,
