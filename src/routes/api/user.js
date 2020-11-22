@@ -59,7 +59,6 @@ router.patch('/changePassword', loginCheck, genValidator(userValidate),
         ctx.body = await changePassword(userName, password, newPassword)
     })
 
-
 // 退出登录
 router.post('/logout', loginCheck, async (ctx, next) => {
     ctx.body = await logout(ctx);
