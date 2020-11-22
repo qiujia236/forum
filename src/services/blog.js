@@ -57,7 +57,6 @@ async function getBlogListByUser(
         blogItem.user = formatUser(user)
         return blogItem
     })
-
     return {
         count: result.count,
         blogList
