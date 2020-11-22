@@ -13,10 +13,12 @@ const { REDIS_CONF } = require('./conf/db');
 const blogViewRouter = require('./routes/view/blog');
 const blogHomeAPIRouter = require('./routes/api/blog-home');
 const blogProfileAPIRouter = require('./routes/api/blog-profile');
+const blogSquareAPIRouter = require('./routes/api/blog-square');
 const userViewRouter = require('./routes/view/user');
 const userAPIRouter = require('./routes/api/user');
 const utilsAPIRouter = require('./routes/api/utils');
 const errorViewRouter = require('./routes/view/error');
+
 const { isProd } = require('./utils/env');
 
 // error handler，页面显示
@@ -73,6 +75,7 @@ app.use(session({
 // routes
 app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
+app.use(blogSquareAPIRouter.routes(), blogSquareAPIRouter.allowedMethods())
 app.use(blogHomeAPIRouter.routes(), blogHomeAPIRouter.allowedMethods())
 app.use(blogProfileAPIRouter.routes(), blogProfileAPIRouter.allowedMethods())
 app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())

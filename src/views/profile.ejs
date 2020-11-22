@@ -33,8 +33,13 @@
 
         <!-- 右侧 -->
         <div class="col-4">
-
-
+            <!-- 个人信息 -->
+            <div class="right-item">
+                <%- include('widgets/user-info', {
+                    userInfo: userData.userInfo,
+                    isMe: userData.isMe
+                })%>
+            </div>
         </div> <!-- 右侧结束 -->
     </div>
 </div>
