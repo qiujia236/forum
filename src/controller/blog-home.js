@@ -1,6 +1,7 @@
 /**
  * @description 首页 controller
  */
+const xss = require('xss')
 const { createBlogFailInfo } = require("../model/ErrorInfo");
 const { SuccessModel, ErrorModel } = require("../model/ResModel");
 const { createBlog } = require("../services/blog")
@@ -12,7 +13,11 @@ const { createBlog } = require("../services/blog")
 async function create({ userId, content, image }) {
     try {
         // 创建微博
-        const blog = await createBlog({ userId, content, image });
+        const blog = await createBlog({
+            userId,
+            content: xss(content),
+            image
+        });
         // 返回
         return new SuccessModel(blog);
     } catch (ex) {

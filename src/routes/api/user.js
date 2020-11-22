@@ -11,7 +11,7 @@ const { isExist,
     logout } = require('../../controller/user');
 const userValidate = require('../../validator/user');
 const { genValidator } = require('../../middleWares/validator');
-const { loginCheck } = require('../../middlewares/loginChecks');
+const { loginCheck } = require('../../middleWares/loginChecks');
 
 router.prefix('/api/user');
 
