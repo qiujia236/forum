@@ -12,6 +12,7 @@ const { REDIS_CONF } = require('./conf/db');
 
 const blogViewRouter = require('./routes/view/blog');
 const blogHomeAPIRouter = require('./routes/api/blog-home');
+const blogProfileAPIRouter = require('./routes/api/blog-profile');
 const userViewRouter = require('./routes/view/user');
 const userAPIRouter = require('./routes/api/user');
 const utilsAPIRouter = require('./routes/api/utils');
@@ -73,6 +74,7 @@ app.use(session({
 app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(blogHomeAPIRouter.routes(), blogHomeAPIRouter.allowedMethods())
+app.use(blogProfileAPIRouter.routes(), blogProfileAPIRouter.allowedMethods())
 app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 app.use(utilsAPIRouter.routes(), utilsAPIRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods())

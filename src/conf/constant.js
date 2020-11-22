@@ -3,5 +3,6 @@
  */
 
 module.exports = {
-    DEFAULT_PICTURE: '/example.jpg'
+    DEFAULT_PICTURE: '/example.jpg',
+    PAGE_SIZE: 5
 }
