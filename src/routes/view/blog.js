@@ -8,6 +8,7 @@ const { isExist } = require('../../controller/user');
 const { getSquareBlogList } = require('../../controller/blog-square');
 const { getFans, getFollowers } = require('../../controller/user-relation');
 const { getHomeBlogList } = require('../../controller/blog-home');
+const { getAtMeCount } = require('../../controller/blog-at');
 
 // 首页
 router.get('/', loginRedirect, async (ctx, next) => {
@@ -27,8 +28,8 @@ router.get('/', loginRedirect, async (ctx, next) => {
     const { count: followersCount, followersList } = followersResult.data
 
     // 获取 @ 数量
-    // const atCountResult = await getAtMeCount(userId)
-    // const { count: atCount } = atCountResult.data
+    const atCountResult = await getAtMeCount(userId)
+    const { count: atCount } = atCountResult.data
 
     await ctx.render('index', {
         userData: {
@@ -41,7 +42,7 @@ router.get('/', loginRedirect, async (ctx, next) => {
                 count: followersCount,
                 list: followersList
             },
-            // atCount
+            atCount
         },
         blogData: {
             isEmpty,
@@ -78,7 +79,6 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
         }
         // 用户名存在
         curUserInfo = existResult.data
-        // console.log(curUserInfo);
     }
 
     // 获取微博第一页数据
@@ -98,6 +98,10 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     const amIFollowed = fansList.some(item => {
         return item.userName === myUserName
     })
+
+    // 获取 @ 数量
+    const atCountResult = await getAtMeCount(myUserInfo.id)
+    const { count: atCount } = atCountResult.data
 
     await ctx.render('profile', {
         blogData: {
@@ -119,6 +123,7 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
                 list: followersList
             },
             amIFollowed,
+            atCount
         }
     })
 })
