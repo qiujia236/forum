@@ -6,7 +6,7 @@ const { formatUser } = require("./_format");
 
 /**
  * 获取关注该用户的用户列表，即该用户的粉丝
- * @param {number} followerId 被关注人的 id
+ * @param {number} followerId 被关注人的id
  */
 async function getUserByFollower(followerId) {
     const result = await User.findAndCountAll({
@@ -32,6 +32,42 @@ async function getUserByFollower(followerId) {
         userList
     }
 }
+
+/**
+ * 获取关注人列表
+ * @param {number} userId userId
+ */
+async function getFollowersByUser(userId) {
+    const result = await UserRelation.findAndCountAll({
+        order: [
+            ['id', 'asc']
+        ],
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'userName', 'nickName', 'picture']
+            }
+        ],
+        where: {
+            userId,
+        }
+    })
+
+    let userList = result.rows.map(row => row.dataValues)
+
+    userList = userList.map(item => {
+        let user = item.user
+        user = user.dataValues
+        user = formatUser(user)
+        return user
+    })
+    console.log(userList);
+    return {
+        count: result.count,
+        userList
+    }
+}
+
 
 /**
  * 添加关注关系
@@ -64,6 +100,7 @@ async function deleteFollower(userId, followerId) {
 
 module.exports = {
     getUserByFollower,
+    getFollowersByUser,
     addFollower,
-    deleteFollower
+    deleteFollower,
 }
