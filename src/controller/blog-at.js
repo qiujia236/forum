@@ -40,7 +40,23 @@ async function getAtMeBlogList(userId, pageIndex = 0) {
     })
 }
 
+/**
+ * 标记为已读
+ * @param {number} userId userId
+ */
+async function markAsRead(userId) {
+    try {
+        await updateAtRelation(
+            { newIsRead: true },
+            { userId, isRead: false }
+        )
+    } catch (ex) {
+        console.error(ex.stack, ex.message);
+    }
+}
+
 module.exports = {
     getAtMeCount,
     getAtMeBlogList,
+    markAsRead
 }
