@@ -19,7 +19,7 @@ const doCrypto = require("../utils/cryp");
 async function isExist(userName) {
     const userInfo = await getUserInfo(userName);
     if (userInfo) {
-        return new SuccessModel({ userInfo });
+        return new SuccessModel(userInfo);
     } else {
         return new ErrorModel(registerUserNameNotExistInfo);
     }

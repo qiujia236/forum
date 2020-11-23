@@ -39,17 +39,23 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
         }
         // 用户名存在
         curUserInfo = existResult.data
+        // console.log(curUserInfo);
     }
 
     // 获取微博第一页数据
     const result = await getProfileBlogList(curUserName, 0)
-
     const { isEmpty, blogList, pageSize, pageIndex, count } = result.data
 
     // 获取粉丝
     const fansResult = await getFans(curUserInfo.id)
+    console.log(fansResult.data);
     const { count: fansCount, fansList } = fansResult.data
-    console.log(fansCount, fansList);
+
+    // 我是否关注了此人？
+    const amIFollowed = fansList.some(item => {
+        return item.userName === myUserName
+    })
+
     await ctx.render('profile', {
         blogData: {
             isEmpty,
@@ -64,7 +70,8 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
             fansData: {
                 count: fansCount,
                 list: fansList
-            }
+            },
+            amIFollowed,
         }
     })
 })
