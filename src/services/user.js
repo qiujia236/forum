@@ -3,6 +3,7 @@
  */
 const { User } = require('../db/model/index');
 const { formatUser } = require('./_format');
+const { addFollower } = require('./user-relation');
 
 async function getUserInfo(userName, password) {
     // 查询条件
@@ -40,7 +41,12 @@ async function createUser({ userName, password, gender = 3, nickName }) {
         nickName: nickName ? nickName : userName,
         gender
     })
-    return result.dataValues;
+    const data = result.dataValues;
+
+    // 自己关注自己
+    addFollower(data.id, data.id);
+
+    return data;
 }
 
 /**
