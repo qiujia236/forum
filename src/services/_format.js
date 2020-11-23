@@ -60,13 +60,6 @@ function _formatContent(obj) {
         }
     )
 
-    "@admin-admin : @lishi-lishi ，收到".replace(
-        /@(.+?)-(\w+?)\b/g,
-        (matchStr, nickName, userName) => {
-            console.log(userName);
-        }
-    )
-
     return obj
 }
 
