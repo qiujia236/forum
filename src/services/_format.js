@@ -44,8 +44,8 @@ function _formatDBTime(obj) {
 }
 
 /**
- * 格式化论坛内容
- * @param {Object} obj 论坛数据对象
+ * 格式化内容
+ * @param {Object} obj 数据对象
  */
 function _formatContent(obj) {
     obj.contentFormat = obj.content

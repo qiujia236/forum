@@ -68,7 +68,7 @@ async function getFollowersByUser(userId) {
         user = formatUser(user)
         return user
     })
-    console.log(userList);
+
     return {
         count: result.count,
         userList

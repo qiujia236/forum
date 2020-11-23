@@ -17,7 +17,7 @@ router.get('/', loginRedirect, async (ctx, next) => {
     // 获取第一页数据
     const result = await getHomeBlogList(userId);
     const { isEmpty, blogList, pageSize, pageIndex, count } = result.data
-    console.log(blogList);
+
     // 获取粉丝
     const fansResult = await getFans(userId)
     const { count: fansCount, fansList } = fansResult.data
