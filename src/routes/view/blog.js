@@ -12,6 +12,7 @@ const { getAtMeCount, getAtMeBlogList, markAsRead } = require('../../controller/
 
 // 首页
 router.get('/', loginRedirect, async (ctx, next) => {
+    console.log(ctx.request.querystring);
     const userInfo = ctx.session.userInfo
     const { id: userId } = userInfo
 

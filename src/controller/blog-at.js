@@ -2,7 +2,7 @@
  * @description  @ 关系 controller
  */
 
-const { getAtRelationCount, getAtUserBlogList } = require('../services/at-relation')
+const { getAtRelationCount, getAtUserBlogList, updateAtRelation } = require('../services/at-relation')
 const { SuccessModel } = require('../model/ResModel')
 const { PAGE_SIZE } = require('../conf/constant')
 
