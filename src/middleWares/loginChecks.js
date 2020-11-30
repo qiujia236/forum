@@ -25,7 +25,6 @@ async function loginCheck(ctx, next) {
  * @param {function} next next
  */
 async function loginRedirect(ctx, next) {
-    console.log("aaa");
     if (ctx.session && ctx.session.userInfo) {
         // 已登录
         await next()

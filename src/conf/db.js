@@ -24,11 +24,14 @@ if (isProd) {
     REDIS_CONF = {
         // 线上的 redis 配置
         port: 6379,
-        host
+        host: '127.0.0.1',
+        // host,
+        password: { auth_pass: 'redis' }
     }
 
     MYSQL_CONF = {
-        host,
+        host: '127.0.0.1',
+        // host,
         user: 'root',
         password: 'root',
         port: '3306',

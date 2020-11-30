@@ -1,4 +1,4 @@
-const { loginRedirect } = require('../../middlewares/loginChecks');
+const { loginRedirect } = require('../../middleWares/loginChecks');
 
 const router = require('koa-router')();
 
